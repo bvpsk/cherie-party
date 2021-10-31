@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lets Chat</title>
+    <link rel="stylesheet" href="room.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <section class="header">
+        <img class="logo" src="assets/logo.png" alt="LOGO">
+        <div class="room-details">
+            ROOM ID
+            <div id="room-id"></div>
+        </div>
+        <div id="leave-btn">Leave</div>
+    </section>
+
+    <section class="chat-wrapper">
+        <div class="chat">
+
+            <div id="messages">
+
+                <!-- <div class="msg-wrapper">
+                    <div class="msg">
+                        <div class="msg-from" style = "color: white">Homer</div>
+                        <div class="msg-content">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</div>
+                        <div class="msg-timestamp">09:23 PM</div>
+                    </div>
+                </div>
+
+                <div class="msg-wrapper">
+                    <div class="msg my-msg">
+                        <div class="msg-from">You</div>
+                        <div class="msg-content">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</div>
+                        <div class="msg-timestamp">09:23 PM</div>
+                    </div>
+                </div>
+
+                <div class="msg-wrapper">
+                    <div class="status-msg">
+                        Bart Simpson Joined.
+                    </div>
+                </div> -->
+
+            </div>
+
+            <div class="msg-input">
+                <input id = "msg-input-content" type="text" placeholder="Enter your message">
+                <div id="send-btn">SEND</div>
+            </div>
+        </div>
+
+        <div class="participants">
+            <div class="ph1">PARTICIPANTS</div>
+            <div id="participants-wrapper">
+
+                <!-- <div class="participant">
+                    <div class="p-avatar">Y</div>
+                    <div class = "p-name">You</div>
+                </div>
+                <div class="participant">
+                    <div class="p-avatar">H</div>
+                    <div class = "p-name">Homer Simpson</div>
+                </div> -->
+
+            </div>
+        </div>
+    </section>
+    <script src = "room.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+html{
+    background-color: #ebe7db;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-wrapper{
+    padding: 3rem 6rem;
+    background-color: royalblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo{
+    width: 4.5rem;
+}
+.join-room{
+    margin: 4rem 0 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    color: white;
+    font-size: 2rem;
+    font-weight: bolder;
+}
+
+.join-room span{
+    margin: 0 0.5rem;
+}
+
+.create-room{
+    color: white;
+    display: flex;
+    align-items: center;
+    /* font-size: 1rem; */
+    /* font-weight: bolder; */
+}
+
+#create-room-btn{
+    background-color: white;
+    color: royalblue;
+    font-size: 2rem;
+    padding: 0.3rem;
+    font-weight: bolder;
+    margin-left: 1rem;
+    cursor: pointer;
+}
+
+.inp-field{
+    background: transparent;
+    outline: none;
+    border: none;
+    /* border: 3px solid transparent; */
+    border-bottom: 2px solid white;
+    font-size: 2rem;
+    width: 18rem;
+    padding: 0 1rem;
+    color: white;
+    letter-spacing: 0.75rem;
+    margin-left: 2rem;
+    /* border: 3px solid rgb(255 141 141); */
+}
+
+.inp-field::placeholder{
+    color: rgb(167, 165, 185);
+    letter-spacing: normal;
+    font-size: 2rem;
+}
+
+#join-arrow{
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: white;
+    margin-left: 0.5rem;
+    clip-path: polygon(100% 50%, 0 0, 0 100%);
+    cursor: pointer;
+}
+
+.divider{
+    /* background-color: red; */
+    width: 100%;
+    margin-bottom: 1.5rem;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    color: royalblue;
+    font-weight: bolder;
+    font-size: 1.5rem;
+}
+
+.clip-container{
+    background-color: white;
+    padding: 1rem;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+
+.divider-line{
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+}
