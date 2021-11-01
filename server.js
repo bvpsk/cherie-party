@@ -27,7 +27,12 @@ app.get("/joinRoom/:roomId", (req, res) => {
 })
 
 const httpServer = createServer(app);
-const io = new Server(httpServer, { /* options */ });
+const io = new Server(httpServer, {
+    cors: {
+        origin: ["*"],
+        // allowedHeaders: ["my-custom-header"],
+        // credentials: true
+    }});
 // const rooms = io.of("/").adapter.rooms;
 let rooms = {};
 
