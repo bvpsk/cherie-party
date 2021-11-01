@@ -53,6 +53,7 @@ io.on("connection", (socket) => {
     let roomId = socket.handshake.query['roomId'];
     let userName = socket.handshake.query['name'];
     let createRoom = socket.handshake.query['createRoom'];
+    let partyUrl = socket.handshake.query['partyUrl'];
 
     // Set name and roomId params as props for that socket
     socket["username"] = userName;
@@ -63,7 +64,11 @@ io.on("connection", (socket) => {
 
     // If this is a newly created room, create a prop with this roomId for storing connected sockets
     if(!rooms.hasOwnProperty(roomId)){
-        rooms[roomId] = [];
+        rooms[roomId] = {
+            host: socket.id,
+            users: [],
+            partyUrl: partyUrl
+        };
     }
 
     // After a user connected to a room, send the usernames of all other connected users in that room
@@ -71,11 +76,11 @@ io.on("connection", (socket) => {
         roomId,
         users: {}
     };
-    rooms[roomId].forEach(user => { roomData.users[user.id] = user.username});
+    rooms[roomId].users.forEach(user => { roomData.users[user.id] = user.username});
     io.to(socket.id).emit("roomData", roomData);
 
     // Finally store the current user's socket in this room
-    rooms[roomId].push(socket);
+    rooms[roomId].users.push(socket);
 
     // Inform to other users that a new user got added
     let currentUser = {}
@@ -88,13 +93,20 @@ io.on("connection", (socket) => {
         socket.to(roomId).emit("msg", data);
     });
 
+    // Event to send controls
+    socket.on("control", (data) => {
+        data['from'] = userName;
+        data['fromHost'] = rooms[roomId].host == socket.id;
+        socket.to(roomId).emit("control", data);
+    });
+
     // Upon user manually leaving
     socket.on("leaveRoom", (data) => {
         if(data){
             socket.to(roomId).emit("userLeft", currentUser);
             socket.leave(roomId);
-            let socketIdx = rooms[roomId].findIndex(user => user == socket);
-            rooms[roomId].splice(socketIdx, 1);
+            let socketIdx = rooms[roomId].users.findIndex(user => user == socket);
+            rooms[roomId].users.splice(socketIdx, 1);
         }
     })
 

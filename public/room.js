@@ -60,7 +60,7 @@ function addMessage(msgData, bySelf = true, isStatus = false){
 
         msgFrom.innerHTML = from;
         msgContent.innerHTML = msgText;
-        msgTimestamp.innerHTML = timestamp;
+        msgTimestamp.innerHTML = getCurrentTimestamp(new Date(timestamp));
 
         msgDiv.append(msgFrom, msgContent, msgTimestamp);
         msgWrapper.append(msgDiv);
@@ -72,8 +72,8 @@ function addMessage(msgData, bySelf = true, isStatus = false){
     messages.scrollTo({ left: 0, top: messages.scrollHeight, behavior: "smooth" }); // To scroll to the bottom msg.
 }
 
-function getCurrentTimestamp(){
-    let date = new Date();
+function getCurrentTimestamp(date = new Date()){
+    // let date = new Date();
     let hours = date.getHours();
     let hoursMod = hours % 12;
     return `${hoursMod < 10 ? "0" : ""}${hoursMod}:${date.getMinutes()} ${hours >= 12 ? "PM" : "AM"}`;
@@ -93,7 +93,7 @@ window.onload = function(){
 
     document.querySelector("#send-btn").addEventListener("click", (e) => {
         let msgText = msgInput.value;
-        addMessage({ text: msgText, from: "You", timestamp: getCurrentTimestamp() });
+        addMessage({ text: msgText, from: "You", timestamp: Date.now() });
         msgInput.value = "";
     });
 
@@ -107,7 +107,7 @@ window.onload = function(){
         if (event.keyCode === 13) {
             event.preventDefault();
             let msgText = msgInput.value;
-            addMessage({ text: msgText, from: "You", timestamp: getCurrentTimestamp() });
+            addMessage({ text: msgText, from: "You", timestamp: Date.now() });
             msgInput.value = "";
         }
     })
@@ -138,7 +138,8 @@ function makeSocketConnections(){
         query: {
             roomId,
             name: selfName,
-            createRoom
+            createRoom,
+            partyUrl: ""
         }
     });
 
@@ -171,9 +172,13 @@ function makeSocketConnections(){
 
 
     socket.on("msg", (data) => {
+        // data["timestamp"] = getCurrentTimestamp(new Date(data["timestamp"]));
         addMessage(data, false)
     });
 
+    socket.on("control", (data) => {
+        console.log("control", data)
+    });
 
 
 }
