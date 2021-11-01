@@ -31,7 +31,7 @@ app.get("/joinRoom/:roomId", (req, res) => {
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
-        origin: ["*"],
+        origins: ["*"],
         handlePreflightRequest: (req, res) => {
             res.writeHead(200, {
                 "Access-Control-Allow-Origin": "*",
