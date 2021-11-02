@@ -28,6 +28,22 @@ app.get("/joinRoom/:roomId", (req, res) => {
     res.send({status: rooms.hasOwnProperty(roomId)})
 })
 
+app.get("/getRoomDetails/:roomId", (req, res) => {
+    let roomId = req.params.roomId;
+    if (rooms.hasOwnProperty(roomId)){
+        let roomData = {
+            status: true,
+            roomId,
+            users: {},
+        };
+        roomData['partyUrl'] = rooms[roomId]['partyUrl']
+        rooms[roomId].users.forEach(user => { roomData.users[user.id] = user.username });
+        res.send(roomData);
+    }else{
+        res.send({ status: false })
+    }
+})
+
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
