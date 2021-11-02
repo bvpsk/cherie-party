@@ -74,7 +74,8 @@ io.on("connection", (socket) => {
     // After a user connected to a room, send the usernames of all other connected users in that room
     let roomData = {
         roomId,
-        users: {}
+        users: {},
+        partyUrl: partyUrl
     };
     rooms[roomId].users.forEach(user => { roomData.users[user.id] = user.username});
     io.to(socket.id).emit("roomData", roomData);

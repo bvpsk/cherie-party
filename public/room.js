@@ -149,6 +149,8 @@ function makeSocketConnections(){
 
     socket.on("roomData", (data) => {
         let users = data['users'];
+        let partyUrl = data["partyUrl"];
+        console.log("PU", partyUrl)
         for (userId in users){
             addParticipant(users[userId], userId)
         }
