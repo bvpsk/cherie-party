@@ -14,6 +14,7 @@ app.use(function (req, res, next) {
 
 app.use(express.static('public'))
 
+
 //PORT ENVIRONMENT VARIABLE
 const port = process.env.PORT || 5555;
 let numRooms = 0;
@@ -28,9 +29,27 @@ app.get("/joinRoom/:roomId", (req, res) => {
     res.send({status: rooms.hasOwnProperty(roomId)})
 })
 
+app.get("/joinParty/:roomId", (req, res) => {
+    let roomId = req.params.roomId;
+    let roomData = getRoomDetails(roomId);
+    res.cookie('roomData', JSON.stringify(roomData));
+    // if (rooms.hasOwnProperty(roomId)){
+        // Room is available
+        res.sendFile("public/joinParty.html", { root: __dirname });
+    // }else{
+        // Room is not present
+        // res.sendFile("public/noRoom.html", { root: __dirname });
+    // }
+})
+
 app.get("/getRoomDetails/:roomId", (req, res) => {
     let roomId = req.params.roomId;
-    if (rooms.hasOwnProperty(roomId)){
+    let roomData = getRoomDetails(roomId);
+    res.send(roomData);
+})
+
+function getRoomDetails(roomId){
+    if (rooms.hasOwnProperty(roomId)) {
         let roomData = {
             status: true,
             roomId,
@@ -38,11 +57,11 @@ app.get("/getRoomDetails/:roomId", (req, res) => {
         };
         roomData['partyUrl'] = rooms[roomId]['partyUrl']
         rooms[roomId].users.forEach(user => { roomData.users[user.id] = user.username });
-        res.send(roomData);
-    }else{
-        res.send({ status: false })
+        return roomData;
+    } else {
+        return  {status: false };
     }
-})
+}
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
