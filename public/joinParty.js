@@ -1,5 +1,5 @@
 let roomId;
-let hwpExtensionId = 'jbopohiiakkkpkepnmkjkjpcfnhgigpf'
+let hwpExtensionId; // = 'jbopohiiakkkpkepnmkjkjpcfnhgigpf'
 window.onload = async function(){
     let createBtn = document.querySelector("#create-room-btn");
     let nameField = document.querySelector("#user-name")
@@ -7,9 +7,17 @@ window.onload = async function(){
     let extensionInstalled = false;
     roomId = window.location.href.split("/").pop();
     console.log({roomId})
-    checkExtension(hwpExtensionId, 'app/icon.png', (ok) => {
-        extensionInstalled = ok;
-    })
+
+    setTimeout(() => {
+        let extIdDiv = document.querySelector("#extension-present");
+        extensionInstalled = extIdDiv != undefined;
+        hwpExtensionId = extIdDiv.innerHTML;
+        console.log(hwpExtensionId);
+    }, 2000)
+
+    // checkExtension(hwpExtensionId, 'app/icon.png', (ok) => {
+    //     extensionInstalled = ok;
+    // })
 
     let roomDataCookie = getCookie('roomData');
     deleteCookie('roomData');
@@ -24,6 +32,8 @@ window.onload = async function(){
 
     createBtn.addEventListener("click", (e) => {
         roomData['userName'] = nameField.value;
+        let sampleDiv = document.querySelector("#extension-present");
+        console.log(sampleDiv, "hi", sampleDiv.innerHTML)
         if(extensionInstalled){
             // setCookie("hwpRoomData", JSON.stringify(roomData), 1);
             chrome.runtime.sendMessage(hwpExtensionId, { roomData },
